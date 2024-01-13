@@ -3,9 +3,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,7 +42,6 @@ public class ChromeKiosk {
     @Test
     public void ChromeKiosk() {
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("https://demo.w3layouts.com/demos_new/template_demo/03-10-2020/photoflash-liberty-demo_Free/" +
                 "685659620/web/index.html?_ga=2.181802926.889871791.1632394818-2083132868.1632394818");
         driver.manage().window().maximize();
@@ -48,7 +49,11 @@ public class ChromeKiosk {
         logger.info("Перешел по ссылке");
 //            driver.manage().window().setSize(new Dimension(1920,1080));
         WebElement image = driver.findElement(By.xpath("//span[@class='image-block']/."));
-        image.click();
+        Actions actions = new Actions(driver);
+        actions.moveToElement(image);
+        actions.perform();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        image.sendKeys(Keys.RETURN);
         logger.info("Нажал на 1ую картинку");
         WebElement modalWindow = driver.findElement(By.cssSelector("//div[@class='pp_hoverContainer']"));
         Assertions.assertEquals("pp_hoverContainer", modalWindow.getAttribute("class"));
