@@ -5,9 +5,6 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.concurrent.TimeUnit;
 
 public class ChromeHeadless {
 
@@ -31,8 +28,8 @@ public class ChromeHeadless {
 
 
     @AfterEach
-    public void driverStop(){
-        if(driver!=null){
+    public void driverStop() {
+        if (driver != null) {
             logger.info("Закрываю браузер");
             driver.close();
             driver.quit();
@@ -40,12 +37,12 @@ public class ChromeHeadless {
     }
 
     @Test
-    public void ChromeHeadless(){
+    public void ChromeHeadless() {
         driver.get("https://duckduckgo.com/");
         driver.findElement(By.xpath("//input[@placeholder='Онлайн-поиск без слежки']")).
                 sendKeys("отус" + Keys.ENTER);
         logger.info("Зашел на сайт");
-        driver.manage().window().setSize(new Dimension(1920,1080));
+        driver.manage().window().setSize(new Dimension(1920, 1080));
 
         WebElement otusLink = driver.findElement(By.xpath("//span[text()='Онлайн‑курсы для профессионалов, дистанционное обучение современным ...']"));
         logger.info("Ввел ОТУС в поисковую строку");
